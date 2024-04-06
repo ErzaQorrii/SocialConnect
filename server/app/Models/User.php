@@ -19,6 +19,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
     ];
@@ -29,6 +30,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
+        'email_verified_at',
+        'created_at',
+        'updated_at',
         'password',
         'remember_token',
     ];
@@ -40,5 +44,57 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'password' => 'hashed',
     ];
+
+    public function posts()
+    {
+        return $this->hasMany(\App\Models\Post::class);
+    }
+
+    public function likedPosts()
+    {
+        return $this->belongsToMany(Post::class, 'likes')->withTimestamps();
+    }
+
+    public function friendsOfMine()
+    {
+        return $this->belongsToMany(User::class, 'friendships', 'user_id', 'friend_id')
+            ->withPivot('status')
+            ->wherePivot('status', '=', Friendship::STATUS_ACCEPTED)
+            ->withTimestamps();
+    }
+
+    public function friendOf()
+    {
+        return $this->belongsToMany(User::class, 'friendships', 'friend_id', 'user_id')
+            ->withPivot('status')
+            ->wherePivot('status', '=', Friendship::STATUS_ACCEPTED)
+            ->withTimestamps();
+    }
+
+    public function getFriendsAttribute()
+    {
+        if (!array_key_exists('friends', $this->relations)) $this->loadFriends();
+
+        return $this->getRelation('friends');
+    }
+
+    protected function loadFriends()
+    {
+        if (!array_key_exists('friendsOfMine', $this->relations))
+        {
+            $this->load('friendsOfMine');
+        }
+
+        if (!array_key_exists('friendOf', $this->relations))
+        {
+            $this->load('friendOf');
+        }
+
+        $friends = $this->getRelation('friendsOfMine')->merge($this->getRelation('friendOf'));
+
+        $this->setRelation('friends', $friends);
+    }
+
 }
