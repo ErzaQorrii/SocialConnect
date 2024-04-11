@@ -903,6 +903,145 @@
                     }
                 ]
             }
+
+        },
+        "/api/photos/{id}": {
+            "get": {
+              "tags": ["Photos"],
+              "summary": "Get a specific photo",
+              "operationId": "getPhoto",
+              "parameters": [
+                {
+                  "name": "id",
+                  "in": "path",
+                  "description": "ID of the photo",
+                  "required": true,
+                  "schema": {
+                    "type": "integer"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "Details of the photo",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/Photo"
+                      }
+                    }
+                  }
+                },
+                "404": {
+                  "description": "Photo not found",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "put": {
+              "tags": ["Photos"],
+              "summary": "Update a photo",
+              "operationId": "updatePhoto",
+              "parameters": [
+                {
+                  "name": "id",
+                  "in": "path",
+                  "description": "ID of the photo",
+                  "required": true,
+                  "schema": {
+                    "type": "integer"
+                  }
+                }
+              ],
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/UpdatePhotoRequest"
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "Photo updated successfully",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "photo": {
+                            "$ref": "#/components/schemas/Photo"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "404": {
+                  "description": "Photo not found",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "delete": {
+              "tags": ["Photos"],
+              "summary": "Delete a photo",
+              "operationId": "deletePhoto",
+              "parameters": [
+                {
+                  "name": "id",
+                  "in": "path",
+                  "description": "ID of the photo",
+                  "required": true,
+                  "schema": {
+                    "type": "integer"
+                  }
+                }
+              ],
+              "responses": {
+                "204": {
+                  "description": "Photo deleted successfully"
+                },
+                "404": {
+                  "description": "Photo not found",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+            }     
+            }
         }
     },
     "components": {
@@ -1036,6 +1175,36 @@
                     }
                 },
                 "type": "object"
+            },
+
+            "Photo": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "image_path": {
+                    "type": "string"
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "updated_at": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+            },
+              "UpdatePhotoRequest": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string"
+                  }
+                }
+       
+            
             }
         },
         "securitySchemes": {
@@ -1045,6 +1214,11 @@
                 "bearerFormat": "JWT",
                 "scheme": "bearer"
             }
+
+            
+
         }
-    }
-}
+
+        
+    }   
+}        

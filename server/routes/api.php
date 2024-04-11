@@ -5,6 +5,7 @@ use App\Http\Controllers\API\LoginRegisterController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\PhotoController;
 
 Route::prefix('auth')->group(function () {
     Route::controller(LoginRegisterController::class)->group(function() {
@@ -40,6 +41,21 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::post('/','store');
         Route::put('/{friendship}', 'update');
         Route::delete('/{friendship}', 'destroy');
+    });
+
+
+     // Photo routes
+    // Route::prefix('photos')->group(function() {
+      //  Route::get('/{id}', [PhotoController::class, 'show']);
+        //Route::put('/{id}', [PhotoController::class, 'update']);
+        //Route::delete('/{id}', [PhotoController::class, 'destroy']);
+    //});
+    Route::prefix('photos')->group(function () {
+        Route::get('/', [PhotoController::class, 'index']);
+        Route::get('/{id}', [PhotoController::class, 'show']);
+        Route::post('/', [PhotoController::class, 'store']);
+        Route::put('/{id}', [PhotoController::class, 'update']);
+        Route::delete('/{id}', [PhotoController::class, 'destroy']);
     });
 
 
