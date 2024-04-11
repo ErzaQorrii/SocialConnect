@@ -94,4 +94,5 @@ class FollowController extends Controller
 
         return response()->json(['message' => 'User unfollowed successfully']);
     }
+    
 }
