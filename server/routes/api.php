@@ -5,6 +5,10 @@ use App\Http\Controllers\API\LoginRegisterController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\StoryController;
+
+
+
 
 Route::prefix('auth')->group(function () {
     Route::controller(LoginRegisterController::class)->group(function() {
@@ -41,6 +45,11 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::put('/{friendship}', 'update');
         Route::delete('/{friendship}', 'destroy');
     });
-
+    // Story routes
+    Route::controller(StoryController::class)->prefix('stories')->group(function() {
+        Route::post('/upload', 'upload'); // Accessible at /stories/upload
+        Route::get('/active', 'viewActiveStories'); // Accessible at /stories/active
+        Route::delete('/{id}', 'delete'); // Accessible at /stories/{id}
+    });
 
 });
