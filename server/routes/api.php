@@ -44,3 +44,10 @@ Route::middleware('auth:sanctum')->group( function () {
 
 
 });
+
+// Followers routes
+Route::controller(FollowController::class)->prefix('followers')->group(function() {
+    Route::get('/', 'index'); 
+    Route::post('/', 'follow'); 
+    Route::delete('/{followed_user_id}', 'unfollow');
+});
