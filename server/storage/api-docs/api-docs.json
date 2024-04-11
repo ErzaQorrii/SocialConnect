@@ -6,6 +6,134 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/follow": {
+            "post": {
+                "tags": [
+                    "Follow"
+                ],
+                "summary": "Follow a user",
+                "description": "Follow another user.",
+                "operationId": "followUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "followed_user_id"
+                                ],
+                                "properties": {
+                                    "followed_user_id": {
+                                        "description": "The ID of the user to follow",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User followed successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User followed successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/unfollow": {
+            "delete": {
+                "tags": [
+                    "Follow"
+                ],
+                "summary": "Unfollow a user",
+                "description": "Unfollow a user that is previously followed.",
+                "operationId": "unfollowUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "followed_user_id"
+                                ],
+                                "properties": {
+                                    "followed_user_id": {
+                                        "description": "The ID of the user to unfollow",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User unfollowed successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User unfollowed successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/friends": {
             "get": {
                 "tags": [
@@ -1406,6 +1534,37 @@
     },
     "components": {
         "schemas": {
+            "Follow": {
+                "description": "Follow relationship model",
+                "properties": {
+                    "id": {
+                        "description": "Unique identifier of the follow relationship",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "follower_user_id": {
+                        "description": "The ID of the user who is following",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "followed_user_id": {
+                        "description": "The ID of the user being followed",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "created_at": {
+                        "description": "Timestamp when the follow relationship was created",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Timestamp when the follow relationship was last updated",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
             "Friendship": {
                 "properties": {
                     "id": {

@@ -1,12 +1,53 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
-use App\Models\Follow;
+use App\Http\Controllers\Controller;
+use App\Models\Follower;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class FollowController extends Controller
+/**
+ * @OA\Schema(
+ *   schema="Follow",
+ *   type="object",
+ *   description="Follow relationship model",
+ *   @OA\Property(
+ *     property="id",
+ *     type="integer",
+ *     format="int64",
+ *     description="Unique identifier of the follow relationship"
+ *   ),
+ *   @OA\Property(
+ *     property="follower_user_id",
+ *     type="integer",
+ *     format="int64",
+ *     description="The ID of the user who is following"
+ *   ),
+ *   @OA\Property(
+ *     property="followed_user_id",
+ *     type="integer",
+ *     format="int64",
+ *     description="The ID of the user being followed"
+ *   ),
+ *   @OA\Property(
+ *     property="created_at",
+ *     type="string",
+ *     format="date-time",
+ *     description="Timestamp when the follow relationship was created"
+ *   ),
+ *   @OA\Property(
+ *     property="updated_at",
+ *     type="string",
+ *     format="date-time",
+ *     description="Timestamp when the follow relationship was last updated"
+ *   )
+ * )
+ */
+
+
+
+class FollowerController extends Controller
 {
     /**
      * @OA\Post(
@@ -94,5 +135,5 @@ class FollowController extends Controller
 
         return response()->json(['message' => 'User unfollowed successfully']);
     }
-    
+
 }

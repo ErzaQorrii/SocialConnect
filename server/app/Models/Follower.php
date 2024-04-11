@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Follow extends Model
+class Follower extends Model
 {
     protected $table = 'follows';
 
@@ -20,7 +20,7 @@ class Follow extends Model
     {
 
         return $this->belongsTo(User::class, 'follower_user_id');
-        
+
     }
 
     public function followed()
@@ -28,5 +28,5 @@ class Follow extends Model
         return $this->belongsTo(User::class, 'followed_user_id');
     }
 
-    
+
 }
