@@ -21,15 +21,12 @@ class Group extends Model
     {
         return $this->hasMany(Post::class);
     }
-    public function members()
-    {
-        return $this->hasMany(GroupMember::class);
-    }
+//    public function members()
+//    {
+//        return $this->hasMany(GroupMember::class);
+//    }
 
 }
-
-
-
 
 
 ?>
