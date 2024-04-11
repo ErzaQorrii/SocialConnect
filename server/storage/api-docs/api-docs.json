@@ -903,6 +903,163 @@
                     }
                 ]
             }
+        },
+        "/api/stories/upload": {
+            "post": {
+                "tags": [
+                    "Stories"
+                ],
+                "summary": "Upload a new story",
+                "operationId": "8f6ceddad11e950a5b7e1befad239b37",
+                "requestBody": {
+                    "description": "Pass user's story media",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "media"
+                                ],
+                                "properties": {
+                                    "media": {
+                                        "description": "The file of the story media",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Story uploaded successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Story uploaded successfully"
+                                        },
+                                        "path": {
+                                            "type": "string",
+                                            "example": "public/stories/yourstory.jpg"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/stories/active": {
+            "get": {
+                "tags": [
+                    "Stories"
+                ],
+                "summary": "View active stories",
+                "operationId": "5bc7331721fc564dd3f11b67b43c9521",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Story"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/stories/{id}": {
+            "delete": {
+                "tags": [
+                    "Stories"
+                ],
+                "summary": "Delete a specific story",
+                "operationId": "d308ac6dfe5b5145a0afbfc44a96a283",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the story to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Story deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Story deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Story not found or access denied",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Story not found or access denied"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -1033,6 +1190,38 @@
                         "type": "string",
                         "format": "date-time",
                         "example": "2023-01-02T00:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "Story": {
+                "properties": {
+                    "id": {
+                        "description": "The unique identifier of the story.",
+                        "type": "integer"
+                    },
+                    "user_id": {
+                        "description": "The unique identifier of the user who posted the story.",
+                        "type": "integer"
+                    },
+                    "media_path": {
+                        "description": "The path to the story's media.",
+                        "type": "string"
+                    },
+                    "expiration_time": {
+                        "description": "The expiration time of the story.",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "created_at": {
+                        "description": "The date and time when the story was created.",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "The date and time when the story was last updated.",
+                        "type": "string",
+                        "format": "date-time"
                     }
                 },
                 "type": "object"
