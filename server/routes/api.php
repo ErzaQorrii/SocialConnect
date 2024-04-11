@@ -40,7 +40,19 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::post('/','store');
         Route::put('/{friendship}', 'update');
         Route::delete('/{friendship}', 'destroy');
+        
     });
+
+    Route::controller(GroupController::class)->prefix('groups')->group(function() {
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+        Route::get('/{group}', 'show');
+        Route::put('/{group}', 'update');
+        Route::delete('/{group}', 'destroy');
+    });
+
+
+    
 
 
 });
