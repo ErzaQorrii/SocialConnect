@@ -93,9 +93,9 @@ Route::prefix('followers')->group(function() {
         Route::delete('/{id}', [PhotoController::class, 'destroy']);
     });
 
-// // Using the API routes file if it's an API
-// Route::apiResource('comments', CommentController::class);
-
-
-
-
+Route::middleware('auth:sanctum')->controller(CommentController::class)->prefix('comments')->group(function () {
+    Route::post('/', 'store')->name('comments.store');
+    Route::put('/{comment}', 'update')->name('comments.update');
+    Route::get('/{comment}', 'show')->name('comments.show');
+    Route::delete('/{comment}', 'destroy')->name('comments.destroy');
+});
