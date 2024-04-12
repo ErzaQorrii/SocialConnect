@@ -1688,6 +1688,67 @@
                     }
                 ]
             }
+<<<<<<< HEAD
+        }, "/api/comments": {
+            "get": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "List all comments with pagination",
+                "operationId": "1e0d6462c1793b1f13f59c542bc3d912",
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved list of comments with pagination",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "comments": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Comment"
+                                            }
+                                        },
+                                        "pagination": {
+                                            "$ref": "#/components/schemas/Pagination"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Create a new comment",
+                "operationId": "6882999d9accd3330b3f0318b5f3d4cc",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "post_id",
+                                    "content"
+                                ],
+                                "properties": {
+                                    "post_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "example": "This is a comment"
+=======
         },
         "/api/stories/upload": {
             "post": {
@@ -1710,6 +1771,7 @@
                                         "description": "The file of the story media",
                                         "type": "string",
                                         "format": "binary"
+>>>>>>> 36dd93ca2a9cc14a32c6accfe0c1466828cba777
                                     }
                                 },
                                 "type": "object"
@@ -1719,6 +1781,16 @@
                 },
                 "responses": {
                     "201": {
+<<<<<<< HEAD
+                        "description": "Comment created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Comment"
+                                }
+                            }
+                        }
+=======
                         "description": "Story uploaded successfully",
                         "content": {
                             "application/json": {
@@ -1743,6 +1815,7 @@
                     },
                     "401": {
                         "description": "Unauthorized"
+>>>>>>> 36dd93ca2a9cc14a32c6accfe0c1466828cba777
                     }
                 },
                 "security": [
@@ -1752,6 +1825,55 @@
                 ]
             }
         },
+<<<<<<< HEAD
+        "/api/comments/{comment}": {
+            "put": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Update a comment",
+                "operationId": "9a6d5c1ad076595fe4d35f745ad94eb7",
+                "parameters": [
+                    {
+                        "name": "comment",
+                        "in": "path",
+                        "description": "The ID of the comment to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "content"
+                                ],
+                                "properties": {
+                                    "content": {
+                                        "type": "string",
+                                        "example": "Updated comment content"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Comment updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Comment"
+                                }
+                            }
+                        }
+=======
         "/api/stories/active": {
             "get": {
                 "tags": [
@@ -1775,6 +1897,7 @@
                     },
                     "401": {
                         "description": "Unauthorized"
+>>>>>>> 36dd93ca2a9cc14a32c6accfe0c1466828cba777
                     }
                 },
                 "security": [
@@ -1782,6 +1905,20 @@
                         "bearerAuth": []
                     }
                 ]
+<<<<<<< HEAD
+            },
+            "get": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Get a single comment",
+                "operationId": "ee8f9bb2f3d927ef98d3cd7ff33d8c71",
+                "parameters": [
+                    {
+                        "name": "comment",
+                        "in": "path",
+                        "description": "The ID of the comment to fetch",
+=======
             }
         },
         "/api/stories/{id}": {
@@ -1796,6 +1933,7 @@
                         "name": "id",
                         "in": "path",
                         "description": "The ID of the story to delete",
+>>>>>>> 36dd93ca2a9cc14a32c6accfe0c1466828cba777
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -1804,6 +1942,44 @@
                 ],
                 "responses": {
                     "200": {
+<<<<<<< HEAD
+                        "description": "Successfully retrieved the comment",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Comment"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Delete a comment",
+                "operationId": "4fe27a35f2a804cb4b9f6668a12be4c5",
+                "parameters": [
+                    {
+                        "name": "comment",
+                        "in": "path",
+                        "description": "The ID of the comment to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Comment deleted successfully"
+=======
                         "description": "Story deleted successfully",
                         "content": {
                             "application/json": {
@@ -1837,6 +2013,7 @@
                     },
                     "401": {
                         "description": "Unauthorized"
+>>>>>>> 36dd93ca2a9cc14a32c6accfe0c1466828cba777
                     }
                 },
                 "security": [
@@ -1845,6 +2022,57 @@
                     }
                 ]
             }
+<<<<<<< HEAD
+        }
+    },
+    "components": {
+        "schemas": {
+            "Comment": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "post_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "content": {
+                        "type": "string",
+                        "example": "This is a comment"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2023-01-01T00:00:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2023-01-02T00:00:00Z"
+                    }
+                }
+            },
+            "Pagination": {
+                "type": "object",
+                "properties": {
+                    "current_page": {
+                        "type": "integer"
+                    },
+                    "total_pages": {
+                        "type": "integer"
+                    },
+                    "total_items": {
+                        "type": "integer"
+                    },
+                    "has_more_pages": {
+                        "type": "boolean"
+                    }
+                }
+            }
+=======
+>>>>>>> 36dd93ca2a9cc14a32c6accfe0c1466828cba777
         }
     },
     "components": {
