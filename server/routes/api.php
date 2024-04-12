@@ -64,7 +64,13 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::delete('/{id}', 'delete'); // Accessible at /stories/{id}
     });
 
-
+    Route::prefix('comments')->group(function() {
+        Route::get('/', 'CommentController@index');
+        Route::post('/', 'CommentController@store');
+        Route::get('/{comment}', 'CommentController@show');
+        Route::put('/{comment}', 'CommentController@update');
+        Route::delete('/{comment}', 'CommentController@destroy');
+    });    
 
 
 });
