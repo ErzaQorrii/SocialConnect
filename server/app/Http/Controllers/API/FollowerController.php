@@ -85,7 +85,7 @@ class FollowerController extends Controller
             'followed_user_id' => 'required|exists:users,id'
         ]);
 
-        $follow = new Follow();
+        $follow = new Follower();
         $follow->follower_user_id = Auth::id();
         $follow->followed_user_id = $request->followed_user_id;
         $follow->save();
@@ -129,7 +129,7 @@ class FollowerController extends Controller
             'followed_user_id' => 'required|exists:users,id'
         ]);
 
-        Follow::where('follower_user_id', Auth::id())
+        Follower::where('follower_user_id', Auth::id())
             ->where('followed_user_id', $request->followed_user_id)
             ->delete();
 

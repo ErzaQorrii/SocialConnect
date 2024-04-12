@@ -14,5 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/**', function () {
-    return 'invalid headers';
+return 'invalid headers';
 });
