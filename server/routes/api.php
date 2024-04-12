@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\CommentController;
 use App\Http\Controllers\API\FollowerController;
 use App\Http\Controllers\API\FriendshipController;
 use App\Http\Controllers\API\GroupController;
@@ -71,11 +72,13 @@ Route::middleware('auth:sanctum')->group( function () {
 
 
 // Followers routes
-Route::controller(FollowerController::class)->prefix('followers')->group(function() {
-    Route::get('/', 'index');
-    Route::post('/', 'follow');
-    Route::delete('/{followed_user_id}', 'unfollow');
+Route::prefix('followers')->group(function() {
+    Route::get('/', [FollowerController::class, 'index'])->name('followers.index');
+    Route::post('/follow', [FollowerController::class, 'follow'])->name('followers.follow');
+    Route::delete('/unfollow', [FollowerController::class, 'unfollow'])->name('followers.unfollow');
 });
+
+
      // Photo routes
     // Route::prefix('photos')->group(function() {
       //  Route::get('/{id}', [PhotoController::class, 'show']);
@@ -89,5 +92,10 @@ Route::controller(FollowerController::class)->prefix('followers')->group(functio
         Route::put('/{id}', [PhotoController::class, 'update']);
         Route::delete('/{id}', [PhotoController::class, 'destroy']);
     });
+
+// // Using the API routes file if it's an API
+// Route::apiResource('comments', CommentController::class);
+
+
 
 
