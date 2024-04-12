@@ -1,10 +1,17 @@
 <?php
 
+use App\Http\Controllers\API\FollowerController;
 use App\Http\Controllers\API\FriendshipController;
+use App\Http\Controllers\API\GroupController;
 use App\Http\Controllers\API\LoginRegisterController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\StoryController;
+
+
+
+use App\Http\Controllers\API\PhotoController;
 
 Route::prefix('auth')->group(function () {
     Route::controller(LoginRegisterController::class)->group(function() {
@@ -42,5 +49,45 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::delete('/{friendship}', 'destroy');
     });
 
+    Route::controller(GroupController::class)->prefix('groups')->group(function() {
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+        Route::get('/{group}', 'show');
+        Route::put('/{group}', 'update');
+        Route::delete('/{group}', 'destroy');
+    });
+    // Story routes
+    Route::controller(StoryController::class)->prefix('stories')->group(function() {
+        Route::post('/upload', 'upload'); // Accessible at /stories/upload
+        Route::get('/active', 'viewActiveStories'); // Accessible at /stories/active
+        Route::delete('/{id}', 'delete'); // Accessible at /stories/{id}
+    });
+
+
+
 
 });
+
+
+
+// Followers routes
+Route::controller(FollowerController::class)->prefix('followers')->group(function() {
+    Route::get('/', 'index');
+    Route::post('/', 'follow');
+    Route::delete('/{followed_user_id}', 'unfollow');
+});
+     // Photo routes
+    // Route::prefix('photos')->group(function() {
+      //  Route::get('/{id}', [PhotoController::class, 'show']);
+        //Route::put('/{id}', [PhotoController::class, 'update']);
+        //Route::delete('/{id}', [PhotoController::class, 'destroy']);
+    //});
+    Route::prefix('photos')->group(function () {
+        Route::get('/', [PhotoController::class, 'index']);
+        Route::get('/{id}', [PhotoController::class, 'show']);
+        Route::post('/', [PhotoController::class, 'store']);
+        Route::put('/{id}', [PhotoController::class, 'update']);
+        Route::delete('/{id}', [PhotoController::class, 'destroy']);
+    });
+
+
