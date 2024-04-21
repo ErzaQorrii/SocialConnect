@@ -97,4 +97,9 @@ class User extends Authenticatable
         $this->setRelation('friends', $friends);
     }
 
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
+    }
+
 }

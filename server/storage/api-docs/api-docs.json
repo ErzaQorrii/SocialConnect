@@ -1856,6 +1856,246 @@
                     }
                 ]
             }
+        },
+        "/api/videos": {
+            "get": {
+                "tags": [
+                    "Videos"
+                ],
+                "summary": "Display a listing of the videos.",
+                "description": "Retrieves and returns all videos from the database.",
+                "operationId": "getVideos",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Video"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Videos"
+                ],
+                "summary": "Store a newly created video in the database.",
+                "description": "Accepts video data and stores it, returning the stored video data.",
+                "operationId": "addVideo",
+                "requestBody": {
+                    "description": "Data required to create a new video",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "user_id",
+                                    "title",
+                                    "description",
+                                    "file_path"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "description": "User ID who is creating the video",
+                                        "type": "integer",
+                                        "format": "int64",
+                                        "example": 1
+                                    },
+                                    "title": {
+                                        "description": "Title of the video",
+                                        "type": "string",
+                                        "example": "My Summer Vacation"
+                                    },
+                                    "description": {
+                                        "description": "Description of the video",
+                                        "type": "string",
+                                        "example": "Video from my summer vacation in Hawaii."
+                                    },
+                                    "file_path": {
+                                        "description": "File path of the video",
+                                        "type": "string",
+                                        "example": "/uploads/videos/summer_vacation.mp4"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Video successfully created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Video"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input, data validation failed"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/videos/{id}": {
+            "get": {
+                "tags": [
+                    "Videos"
+                ],
+                "summary": "Display a specific video.",
+                "description": "Retrieves and returns data for a single video based on its ID.",
+                "operationId": "getVideo",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the video to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Video"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Video not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Videos"
+                ],
+                "summary": "Update a specific video.",
+                "description": "Updates an existing video and returns the updated video data.",
+                "operationId": "updateVideo",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the video to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Data required to update the video",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "user_id",
+                                    "title",
+                                    "description",
+                                    "file_path"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "description": "User ID who owns the video",
+                                        "type": "integer",
+                                        "format": "int64",
+                                        "example": 1
+                                    },
+                                    "title": {
+                                        "description": "Title of the video",
+                                        "type": "string",
+                                        "example": "My Summer Vacation Updated"
+                                    },
+                                    "description": {
+                                        "description": "Description of the video",
+                                        "type": "string",
+                                        "example": "Updated description of the video from my summer vacation in Hawaii."
+                                    },
+                                    "file_path": {
+                                        "description": "New file path of the video",
+                                        "type": "string",
+                                        "example": "/uploads/videos/updated_summer_vacation.mp4"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Video successfully updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Video"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input, data validation failed"
+                    },
+                    "404": {
+                        "description": "Video not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Videos"
+                ],
+                "summary": "Delete a specific video.",
+                "description": "Deletes a video from the database by its ID and returns no content.",
+                "operationId": "deleteVideo",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the video to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No content, video successfully deleted"
+                    },
+                    "404": {
+                        "description": "Video not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -1971,40 +2211,6 @@
                 },
                 "type": "object"
             },
-            "Comment": {
-                "properties": {
-                    "id": {
-                        "type": "integer",
-                        "format": "int64",
-                        "example": 1
-                    },
-                    "user_id": {
-                        "type": "integer",
-                        "format": "int64",
-                        "example": 1
-                    },
-                    "post_id": {
-                        "type": "integer",
-                        "format": "int64",
-                        "example": 1
-                    },
-                    "content": {
-                        "type": "string",
-                        "example": "This is a comment"
-                    },
-                    "created_at": {
-                        "type": "string",
-                        "format": "date-time",
-                        "example": "2023-01-01T00:00:00Z"
-                    },
-                    "updated_at": {
-                        "type": "string",
-                        "format": "date-time",
-                        "example": "2023-01-02T00:00:00Z"
-                    }
-                },
-                "type": "object"
-            },            
             "Photo": {
                 "required": [
                     "title",
@@ -2168,6 +2374,60 @@
                         "description": "The date and time when the story was last updated.",
                         "type": "string",
                         "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Video": {
+                "title": "Video",
+                "description": "The Video model schema",
+                "required": [
+                    "user_id",
+                    "title",
+                    "description",
+                    "file_path"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Unique identifier for the Video",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "user_id": {
+                        "description": "Foreign key referencing User",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "title": {
+                        "description": "Title of the Video",
+                        "type": "string",
+                        "example": "A Day in the Life"
+                    },
+                    "description": {
+                        "description": "Description of the Video",
+                        "type": "string",
+                        "example": "A detailed description of what the video is about."
+                    },
+                    "file_path": {
+                        "description": "Path to the video file",
+                        "type": "string",
+                        "example": "/videos/day-in-the-life.mp4"
+                    },
+                    "created_at": {
+                        "description": "Timestamp when the video was created",
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true,
+                        "example": "2021-03-10T02:10:59.000000Z"
+                    },
+                    "updated_at": {
+                        "description": "Timestamp when the video was last updated",
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true,
+                        "example": "2021-03-11T10:15:00.000000Z"
                     }
                 },
                 "type": "object"

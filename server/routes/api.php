@@ -7,6 +7,7 @@ use App\Http\Controllers\API\GroupController;
 use App\Http\Controllers\API\LoginRegisterController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\ProfileController;
+use App\Http\Controllers\API\VideoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\StoryController;
 
@@ -70,7 +71,7 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::get('/{comment}', 'CommentController@show');
         Route::put('/{comment}', 'CommentController@update');
         Route::delete('/{comment}', 'CommentController@destroy');
-    });    
+    });
 
 
 });
@@ -104,4 +105,12 @@ Route::middleware('auth:sanctum')->controller(CommentController::class)->prefix(
     Route::put('/{comment}', 'update')->name('comments.update');
     Route::get('/{comment}', 'show')->name('comments.show');
     Route::delete('/{comment}', 'destroy')->name('comments.destroy');
+});
+// Video routes
+Route::controller(VideoController::class)->prefix('videos')->group(function() {
+    Route::get('/', 'index'); // Get all videos
+    Route::post('/', 'store'); // Create a new video
+    Route::get('/{video}', 'show'); // Get a specific video by ID
+    Route::put('/{video}', 'update'); // Update a specific video by ID
+    Route::delete('/{video}', 'destroy'); // Delete a specific video by ID
 });
