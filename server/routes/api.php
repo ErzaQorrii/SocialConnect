@@ -5,6 +5,7 @@ use App\Http\Controllers\API\FollowerController;
 use App\Http\Controllers\API\FriendshipController;
 use App\Http\Controllers\API\GroupController;
 use App\Http\Controllers\API\LoginRegisterController;
+use App\Http\Controllers\API\MessageController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\ProfileController;
 use App\Http\Controllers\API\VideoController;
@@ -108,9 +109,17 @@ Route::middleware('auth:sanctum')->controller(CommentController::class)->prefix(
 });
 // Video routes
 Route::controller(VideoController::class)->prefix('videos')->group(function() {
-    Route::get('/', 'index'); // Get all videos
-    Route::post('/', 'store'); // Create a new video
-    Route::get('/{video}', 'show'); // Get a specific video by ID
-    Route::put('/{video}', 'update'); // Update a specific video by ID
-    Route::delete('/{video}', 'destroy'); // Delete a specific video by ID
+    Route::get('/', 'index');
+    Route::post('/', 'store');
+    Route::get('/{video}', 'show');
+    Route::put('/{video}', 'update');
+    Route::delete('/{video}', 'destroy');
+});
+// Message routes
+Route::controller(MessageController::class)->prefix('messages')->group(function() {
+    Route::get('/', 'index');
+    Route::post('/', 'store');
+    Route::get('/{message}', 'show');
+    Route::put('/{message}', 'update');
+    Route::delete('/{message}', 'destroy');
 });

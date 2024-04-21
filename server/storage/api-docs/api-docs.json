@@ -1078,6 +1078,218 @@
                 ]
             }
         },
+        "/api/messages": {
+            "get": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Retrieve all messages",
+                "description": "Returns a list of all messages in the system.",
+                "operationId": "getMessages",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Message"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Create a new message",
+                "description": "Stores a new message in the database and returns the created message.",
+                "operationId": "addMessage",
+                "requestBody": {
+                    "description": "Data required to create a new message",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "sender_id",
+                                    "receiver_id",
+                                    "content"
+                                ],
+                                "properties": {
+                                    "sender_id": {
+                                        "description": "ID of the user sending the message",
+                                        "type": "integer",
+                                        "format": "int64"
+                                    },
+                                    "receiver_id": {
+                                        "description": "ID of the user receiving the message",
+                                        "type": "integer",
+                                        "format": "int64"
+                                    },
+                                    "content": {
+                                        "description": "Content of the message",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Message created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Message"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input, data validation failed"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/messages/{id}": {
+            "get": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Get a specific message",
+                "description": "Retrieves a specific message by its unique identifier.",
+                "operationId": "getMessage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique identifier of the message",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Message"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Message not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Update a specific message",
+                "description": "Updates an existing message by its unique identifier and returns the updated message.",
+                "operationId": "updateMessage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique identifier of the message to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Data required to update the message",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "content"
+                                ],
+                                "properties": {
+                                    "content": {
+                                        "description": "Updated content of the message",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Message updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Message"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input, data validation failed"
+                    },
+                    "404": {
+                        "description": "Message not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Delete a specific message",
+                "description": "Deletes a message by its unique identifier and returns no content.",
+                "operationId": "deleteMessage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique identifier of the message to be deleted",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No content, message successfully deleted"
+                    },
+                    "404": {
+                        "description": "Message not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
         "/photos/{id}": {
             "get": {
                 "tags": [
@@ -2207,6 +2419,60 @@
                     "description": {
                         "description": "Description of the Group",
                         "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Message": {
+                "title": "Message",
+                "description": "Schema representation of a Message object",
+                "required": [
+                    "sender_id",
+                    "receiver_id",
+                    "content"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Unique identifier of the message",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "sender_id": {
+                        "description": "User ID of the sender",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 101
+                    },
+                    "receiver_id": {
+                        "description": "User ID of the receiver",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 102
+                    },
+                    "content": {
+                        "description": "Content of the message",
+                        "type": "string",
+                        "example": "Hello, how are you?"
+                    },
+                    "read_at": {
+                        "description": "Timestamp when the message was read",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2021-03-10T02:10:59.000000Z",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "description": "Timestamp when the message was created",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2021-03-10T02:10:59.000000Z"
+                    },
+                    "updated_at": {
+                        "description": "Timestamp when the message was last updated",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2021-03-11T10:15:00.000000Z"
                     }
                 },
                 "type": "object"
