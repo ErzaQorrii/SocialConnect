@@ -8,6 +8,7 @@ use App\Http\Controllers\API\LoginRegisterController;
 use App\Http\Controllers\API\MessageController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\ProfileController;
+use App\Http\Controllers\API\TagController;
 use App\Http\Controllers\API\VideoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\StoryController;
@@ -122,4 +123,14 @@ Route::controller(MessageController::class)->prefix('messages')->group(function(
     Route::get('/{message}', 'show');
     Route::put('/{message}', 'update');
     Route::delete('/{message}', 'destroy');
+});
+
+
+// Tag routes
+Route::controller(TagController::class)->prefix('tags')->group(function() {
+    Route::get('/', 'index');
+    Route::post('/', 'store');
+    Route::get('/{tag}', 'show');
+    Route::put('/{tag}', 'update');
+    Route::delete('/{tag}', 'destroy');
 });
