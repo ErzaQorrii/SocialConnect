@@ -8,6 +8,7 @@ use App\Http\Controllers\API\LoginRegisterController;
 use App\Http\Controllers\API\MessageController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\ProfileController;
+use App\Http\Controllers\API\SearchController;
 use App\Http\Controllers\API\TagController;
 use App\Http\Controllers\API\VideoController;
 use Illuminate\Support\Facades\Route;
@@ -133,4 +134,13 @@ Route::controller(TagController::class)->prefix('tags')->group(function() {
     Route::get('/{tag}', 'show');
     Route::put('/{tag}', 'update');
     Route::delete('/{tag}', 'destroy');
+});
+
+
+// Search routes
+Route::controller(SearchController::class)->prefix('searches')->group(function() {
+    Route::get('/', 'index');
+    Route::get('/{search}', 'show');
+    Route::post('/', 'store');
+    Route::delete('/{search}', 'destroy');
 });

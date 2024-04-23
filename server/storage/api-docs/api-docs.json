@@ -1912,6 +1912,303 @@
                 ]
             }
         },
+        "/api/searches": {
+            "get": {
+                "tags": [
+                    "Searches"
+                ],
+                "summary": "Retrieve all search records for the logged-in user",
+                "description": "Fetches a list of all search records associated with the logged-in user.",
+                "operationId": "getUserSearches",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "The ID of the search record.",
+                                                "type": "integer"
+                                            },
+                                            "user_id": {
+                                                "description": "The ID of the user who performed the search.",
+                                                "type": "integer"
+                                            },
+                                            "query": {
+                                                "description": "The search query submitted.",
+                                                "type": "string"
+                                            },
+                                            "results": {
+                                                "description": "The results of the search query, stored in JSON format.",
+                                                "type": "string",
+                                                "format": "json"
+                                            },
+                                            "timestamp": {
+                                                "description": "The timestamp when the search was performed.",
+                                                "type": "string",
+                                                "format": "date-time"
+                                            },
+                                            "created_at": {
+                                                "description": "The timestamp when the record was created.",
+                                                "type": "string",
+                                                "format": "date-time"
+                                            },
+                                            "updated_at": {
+                                                "description": "The timestamp when the record was last updated.",
+                                                "type": "string",
+                                                "format": "date-time"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized if the user is not logged in"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Searches"
+                ],
+                "summary": "Create a new search record",
+                "description": "Stores a new search record with the query, optional results, and timestamp provided by the user.",
+                "operationId": "storeSearch",
+                "requestBody": {
+                    "description": "Data needed to create a new search record",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "query",
+                                    "timestamp"
+                                ],
+                                "properties": {
+                                    "query": {
+                                        "description": "The search query submitted by the user.",
+                                        "type": "string"
+                                    },
+                                    "results": {
+                                        "description": "The results of the search query, stored in JSON format.",
+                                        "type": "string",
+                                        "format": "json",
+                                        "nullable": true
+                                    },
+                                    "timestamp": {
+                                        "description": "The date and time when the search was performed.",
+                                        "type": "string",
+                                        "format": "date-time"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Search record created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "The ID of the newly created search record.",
+                                            "type": "integer"
+                                        },
+                                        "user_id": {
+                                            "description": "The ID of the user who created the search record.",
+                                            "type": "integer"
+                                        },
+                                        "query": {
+                                            "description": "The search query stored.",
+                                            "type": "string"
+                                        },
+                                        "results": {
+                                            "description": "The results of the search stored in JSON format.",
+                                            "type": "string",
+                                            "format": "json"
+                                        },
+                                        "timestamp": {
+                                            "description": "The timestamp when the search was made.",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "created_at": {
+                                            "description": "The timestamp when the record was created.",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "description": "The timestamp when the record was last updated.",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input, data validation failed"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/searches/{id}": {
+            "get": {
+                "tags": [
+                    "Searches"
+                ],
+                "summary": "Retrieve a specific search record",
+                "description": "Fetches details of a specific search record by its ID.",
+                "operationId": "getSearchById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the search record to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "The ID of the search record.",
+                                            "type": "integer"
+                                        },
+                                        "user_id": {
+                                            "description": "The ID of the user who performed the search.",
+                                            "type": "integer"
+                                        },
+                                        "query": {
+                                            "description": "The search query submitted.",
+                                            "type": "string"
+                                        },
+                                        "results": {
+                                            "description": "The results of the search query, stored in JSON format.",
+                                            "type": "string",
+                                            "format": "json"
+                                        },
+                                        "timestamp": {
+                                            "description": "The timestamp when the search was performed.",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "created_at": {
+                                            "description": "The timestamp when the record was created.",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "description": "The timestamp when the record was last updated.",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Search not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Error message indicating the search was not found.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Searches"
+                ],
+                "summary": "Delete a specific search record",
+                "description": "Deletes a specific search record by its ID, ensuring that only the owner of the record can delete it.",
+                "operationId": "deleteSearch",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the search record to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Search deleted successfully, no content to return"
+                    },
+                    "404": {
+                        "description": "Search not found or access denied",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Error message indicating that the search was not found or the user is not authorized to delete it.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
         "/api/stories/upload": {
             "post": {
                 "tags": [
