@@ -1741,6 +1741,576 @@
                 ]
             }
         },
+        "/api/privacy-settings": {
+            "get": {
+                "tags": [
+                    "Privacy Settings"
+                ],
+                "summary": "Retrieve User Privacy Settings",
+                "description": "Fetches all privacy settings for the authenticated user.",
+                "operationId": "getPrivacySettings",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "ID of the privacy setting",
+                                                "type": "integer"
+                                            },
+                                            "user_id": {
+                                                "description": "User ID who owns the setting",
+                                                "type": "integer"
+                                            },
+                                            "setting_type": {
+                                                "description": "Type of the privacy setting",
+                                                "type": "string"
+                                            },
+                                            "setting_value": {
+                                                "description": "Value of the privacy setting",
+                                                "type": "string"
+                                            },
+                                            "created_at": {
+                                                "description": "Timestamp when the setting was created",
+                                                "type": "string",
+                                                "format": "date-time"
+                                            },
+                                            "updated_at": {
+                                                "description": "Timestamp when the setting was updated",
+                                                "type": "string",
+                                                "format": "date-time"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Unauthorized access message",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Unexpected error",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Privacy Settings"
+                ],
+                "summary": "Create a new privacy setting",
+                "description": "Allows authenticated users to create a new privacy setting.",
+                "operationId": "createPrivacySetting",
+                "requestBody": {
+                    "description": "Data required to create a new privacy setting",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "setting_type",
+                                    "setting_value"
+                                ],
+                                "properties": {
+                                    "setting_type": {
+                                        "description": "Type of the privacy setting",
+                                        "type": "string"
+                                    },
+                                    "setting_value": {
+                                        "description": "Value of the privacy setting",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Privacy setting created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "ID of the newly created privacy setting",
+                                            "type": "integer"
+                                        },
+                                        "user_id": {
+                                            "description": "User ID who owns the setting",
+                                            "type": "integer"
+                                        },
+                                        "setting_type": {
+                                            "description": "Type of the privacy setting",
+                                            "type": "string"
+                                        },
+                                        "setting_value": {
+                                            "description": "Value of the privacy setting",
+                                            "type": "string"
+                                        },
+                                        "created_at": {
+                                            "description": "Timestamp when the setting was created",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "description": "Timestamp when the setting was updated",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Validation error messages",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Unauthorized access message",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/privacy-settings/{id}": {
+            "get": {
+                "tags": [
+                    "Privacy Settings"
+                ],
+                "summary": "Get a specific privacy setting",
+                "description": "Retrieves details of a specific privacy setting by its unique ID.",
+                "operationId": "getPrivacySetting",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the privacy setting to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "ID of the privacy setting",
+                                            "type": "integer"
+                                        },
+                                        "user_id": {
+                                            "description": "User ID who owns the setting",
+                                            "type": "integer"
+                                        },
+                                        "setting_type": {
+                                            "description": "Type of the privacy setting",
+                                            "type": "string"
+                                        },
+                                        "setting_value": {
+                                            "description": "Value of the privacy setting",
+                                            "type": "string"
+                                        },
+                                        "created_at": {
+                                            "description": "Timestamp when the setting was created",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "description": "Timestamp when the setting was updated",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Privacy setting not found",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Privacy Settings"
+                ],
+                "summary": "Update a specific privacy setting",
+                "description": "Updates the value of a specific privacy setting for the authenticated user.",
+                "operationId": "updatePrivacySetting",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the privacy setting to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Data required to update the privacy setting",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "setting_value"
+                                ],
+                                "properties": {
+                                    "setting_value": {
+                                        "description": "New value of the privacy setting",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Privacy setting updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "ID of the privacy setting",
+                                            "type": "integer"
+                                        },
+                                        "user_id": {
+                                            "description": "User ID who owns the setting",
+                                            "type": "integer"
+                                        },
+                                        "setting_type": {
+                                            "description": "Type of the privacy setting",
+                                            "type": "string"
+                                        },
+                                        "setting_value": {
+                                            "description": "Updated value of the privacy setting",
+                                            "type": "string"
+                                        },
+                                        "created_at": {
+                                            "description": "Timestamp when the setting was created",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "description": "Timestamp when the setting was updated",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Privacy setting not found",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Validation error messages",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Privacy Settings"
+                ],
+                "summary": "Delete a specific privacy setting",
+                "description": "Deletes a specific privacy setting based on the ID provided. This operation is irreversible.",
+                "operationId": "deletePrivacySetting",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the privacy setting to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content - Successfully deleted the privacy setting."
+                    },
+                    "404": {
+                        "description": "Not Found - The privacy setting could not be found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Privacy setting not found",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - User is not authenticated or lacks permission for this action.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Unauthorized access or operation",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error - Error during the process of deletion.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Internal server error",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/apply-template": {
+            "post": {
+                "tags": [
+                    "Privacy Settings"
+                ],
+                "summary": "Apply privacy template settings",
+                "description": "Apply privacy template settings to a user's account based on the provided template.",
+                "operationId": "applyTemplate",
+                "requestBody": {
+                    "description": "The privacy template to apply",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "type1": "value1",
+                                    "type2": "value2",
+                                    "type3": "value3"
+                                },
+                                "additionalProperties": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "privacySettings": {
+                                            "description": "The updated privacy settings of the user",
+                                            "type": "object",
+                                            "additionalProperties": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "type1": "value1",
+                                    "type2": "value2",
+                                    "type3": "value3"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request. Invalid input provided."
+                    },
+                    "401": {
+                        "description": "Unauthorized. User is not authenticated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Unauthorized access or operation",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error. Something went wrong on the server side.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Internal server error",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
         "/api/user/profile": {
             "get": {
                 "tags": [
@@ -1983,7 +2553,7 @@
                     "Searches"
                 ],
                 "summary": "Create a new search record",
-                "description": "Stores a new search record with the query, optional results, and timestamp provided by the user.",
+                "description": "Stores a new search record with the query, optional results, and timestamp provided by the authenticated user.",
                 "operationId": "storeSearch",
                 "requestBody": {
                     "description": "Data needed to create a new search record",
@@ -2064,6 +2634,9 @@
                     },
                     "400": {
                         "description": "Invalid input, data validation failed"
+                    },
+                    "401": {
+                        "description": "Unauthorized, user is not logged in"
                     },
                     "500": {
                         "description": "Internal server error"
@@ -3073,6 +3646,51 @@
                     "has_more_pages": {
                         "type": "boolean",
                         "example": true
+                    }
+                },
+                "type": "object"
+            },
+            "PrivacySetting": {
+                "title": "Privacy Setting",
+                "description": "A model for storing user privacy settings",
+                "required": [
+                    "id",
+                    "user_id",
+                    "setting_type",
+                    "setting_value"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "The unique identifier for the privacy setting",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "user_id": {
+                        "description": "The ID of the user to whom the privacy setting belongs",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "setting_type": {
+                        "description": "The type of privacy setting",
+                        "type": "string",
+                        "example": "profile_visibility"
+                    },
+                    "setting_value": {
+                        "description": "The value of the privacy setting",
+                        "type": "string",
+                        "example": "public"
+                    },
+                    "created_at": {
+                        "description": "The date and time at which the privacy setting was created",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2021-04-03T10:15:30+01:00"
+                    },
+                    "updated_at": {
+                        "description": "The date and time at which the privacy setting was last updated",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2021-04-03T10:15:30+01:00"
                     }
                 },
                 "type": "object"

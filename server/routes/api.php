@@ -7,13 +7,13 @@ use App\Http\Controllers\API\GroupController;
 use App\Http\Controllers\API\LoginRegisterController;
 use App\Http\Controllers\API\MessageController;
 use App\Http\Controllers\API\PostController;
+use App\Http\Controllers\API\PrivacySettingController;
 use App\Http\Controllers\API\ProfileController;
 use App\Http\Controllers\API\SearchController;
 use App\Http\Controllers\API\TagController;
 use App\Http\Controllers\API\VideoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\StoryController;
-
 
 
 use App\Http\Controllers\API\PhotoController;
@@ -144,3 +144,14 @@ Route::controller(SearchController::class)->prefix('searches')->group(function()
     Route::post('/', 'store');
     Route::delete('/{search}', 'destroy');
 });
+
+
+Route::controller(PrivacySettingController::class)->prefix('privacy-settings')->middleware('auth:sanctum')->group(function () {
+    Route::get('/', 'index');
+    Route::post('/', 'store');
+    Route::get('/{id}', 'show');
+    Route::put('/{id}', 'update');
+    Route::delete('/{id}', 'destroy');
+    Route::post('/', 'applyTemplate');
+});
+
