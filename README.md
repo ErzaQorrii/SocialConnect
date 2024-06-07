@@ -1,6 +1,75 @@
 # Project Name: SocialConnect
 
-## Documentation on ORM Implementation and Database Migrations with Laravel
+## 1. Setting Up the Project
+
+### Prerequisites
+
+1. PHP >= 7.3
+2. Composer
+3. Node.js
+4. npm or yarn
+5. MySQL
+
+### Steps to Set Up the Project
+
+**//Steps to Set Up the Project**
+
+1. Clone the Repository
+    ```bash
+    git clone https://github.com/yourusername/socialconnect.git
+    cd server
+    ```
+
+2. Install Dependencies
+   
+    composer install
+    npm install
+    # or
+    yarn install
+    ```
+
+3. Set Up Environment Variables
+    Edit the `.env` file to configure your database connection:
+    ```env
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=your_database_name
+    DB_USERNAME=your_database_user
+    DB_PASSWORD=your_database_password
+    ```
+
+4. Generate Application Key
+    
+    php artisan key:generate
+    ```
+
+5. Run Migrations
+  
+    php artisan migrate
+    ```
+
+6. Run the Application
+   
+    php artisan serve
+    ```
+
+## 2. Authentication with Sanctum and CSRF Token
+
+For authentication, we used Laravel Sanctum along with CSRF tokens to ensure secure and stateful authentication for the frontend SPA.
+
+- **Laravel Sanctum**: Provides a simple way to authenticate Single Page Applications (SPAs) using cookie-based session authentication.
+- **CSRF Tokens**: Protect against cross-site request forgery attacks by ensuring that each request comes from the authenticated user's browser.
+
+The workflow involves:
+
+1. **User Login**: The SPA sends login credentials to the backend.
+2. **CSRF Token Fetch**: The SPA fetches a CSRF token before making state-changing requests.
+3. **Authenticated Requests**: The SPA includes the CSRF token in the headers for state-changing requests.
+
+This setup ensures that the user is authenticated securely, and all requests are verified to prevent unauthorized actions.
+
+## 3. Documentation on ORM Implementation and Database Migrations with Laravel
 
 ### 1. Choosing an ORM
 
@@ -18,7 +87,6 @@ To manage the database structure, we used Laravel's migrations. This was accompl
 - To run migrations: `php artisan migrate`
 
 These commands help us maintain a history of database changes and revert changes if necessary.
-
 
 ### 4. Eloquent Models
 
@@ -38,7 +106,6 @@ These models are essential for the fundamental operations of SocialConnect and h
 
 As we continue to develop SocialConnect, we anticipate adding more models to our application to represent additional features and entities as needed. These future models will follow the same rigorous standards of efficiency and integration as the current ones.
 
-
 ### 5. Using the ORM in the Project
 
 We utilized Eloquent to create, read, update, and delete data in our database. Eloquent models for each table were used to efficiently manipulate data using the CRUD operations provided by the ORM.
@@ -47,6 +114,4 @@ We utilized Eloquent to create, read, update, and delete data in our database. E
 
 To ensure that all endpoints function correctly and to provide a clear and interactive API documentation for our developers and users, we've utilized Swagger. Swagger offers an elegant solution to both test and document our API endpoints. With its interactive UI, we can easily perform HTTP requests to our API, review the responses, and quickly identify any issues.
 
-
 To access the Swagger UI and test the endpoints, you can navigate to the `/api/documentation` route in your web browser once the application server is running. This interactive documentation allows for real-time testing of all the API's capabilities, including those that interact with the Eloquent models such as `User`, `Post`, `Comment`, etc.
-
