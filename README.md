@@ -4,15 +4,13 @@
 
 ### Prerequisites
 
-1. PHP >= 7.3
+1. PHP ^8.1
 2. Composer
-3. Node.js
-4. npm or yarn
-5. MySQL
+3. MySQL
 
 ### Steps to Set Up the Project
 
-**//Steps to Set Up the Project**
+**Steps to Set Up the Project**
 
 1. Clone the Repository
     ```bash
@@ -21,11 +19,7 @@
     
 
 2. Install Dependencies
-   
     composer install
-    npm install
-    or
-    yarn install
     
 
 3. Set Up Environment Variables
