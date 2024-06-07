@@ -18,7 +18,7 @@
     ```bash
     git clone https://github.com/yourusername/socialconnect.git
     cd server
-    ```
+    
 
 2. Install Dependencies
    
@@ -26,7 +26,7 @@
     npm install
     # or
     yarn install
-    ```
+    
 
 3. Set Up Environment Variables
     Edit the `.env` file to configure your database connection:
@@ -37,22 +37,22 @@
     DB_DATABASE=your_database_name
     DB_USERNAME=your_database_user
     DB_PASSWORD=your_database_password
-    ```
+    
 
 4. Generate Application Key
     
     php artisan key:generate
-    ```
+    
 
 5. Run Migrations
   
     php artisan migrate
-    ```
+    
 
 6. Run the Application
    
     php artisan serve
-    ```
+    
 
 ## 2. Authentication with Sanctum and CSRF Token
 
