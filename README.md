@@ -88,6 +88,10 @@ To manage the database structure, we used Laravel's migrations. This was accompl
 
 These commands help us maintain a history of database changes and revert changes if necessary.
 
+## This image shows the database structure, tables and the relations between data tables.
+![DDL Diagram](/images/db.png)
+
+
 ### 4. Eloquent Models
 
 In the SocialConnect project, we have created a series of Eloquent models to represent the various entities within our application. Each model corresponds to a table in the MySQL database and is utilized to interact with the data within that table. The following are some of the primary models we have implemented thus far:
