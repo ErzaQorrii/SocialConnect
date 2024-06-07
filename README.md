@@ -24,7 +24,7 @@
    
     composer install
     npm install
-    # or
+    or
     yarn install
     
 
